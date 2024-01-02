@@ -28,13 +28,15 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Arimo',
           scaffoldBackgroundColor: DesignSystem.blackColor,
           appBarTheme: AppBarTheme(
-            backgroundColor: DesignSystem.blackColor,
-            titleTextStyle: TextStyle(
-              color: DesignSystem.whiteColor,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+              backgroundColor: DesignSystem.blackColor,
+              titleTextStyle: TextStyle(
+                color: DesignSystem.whiteColor,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              iconTheme: IconThemeData(
+                color: DesignSystem.whiteColor,
+              )),
         ),
         home: const SplashScreen(),
       ),

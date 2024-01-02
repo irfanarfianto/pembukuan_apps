@@ -9,7 +9,7 @@ class AuthPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void _authenticate(BuildContext context) async {
+  Future<void> _authenticate(BuildContext context) async {
     final apiManager = Provider.of<ApiManager>(context, listen: false);
     final userManager = Provider.of<UserManager>(context, listen: false);
 
@@ -17,17 +17,37 @@ class AuthPage extends StatelessWidget {
     final password = _passwordController.text;
 
     try {
+      // Panggil metode untuk melakukan autentikasi dengan data ke backend
       final token = await apiManager.authenticate(username, password);
-      userManager.setAuthToken(token);
-      Navigator.push(
+
+      // Cek apakah autentikasi berhasil (mendapatkan token)
+      if (token != null) {
+        userManager.setAuthToken(token);
+
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (context) => Dashboard(
-                    title: "Dashboard",
-                  )));
+            builder: (context) => Dashboard(title: "Kajur"),
+          ),
+        );
+      } else {
+        // Autentikasi gagal, tampilkan pesan kesalahan
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Invalid credentials. Please try again.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
     } catch (e) {
       print('Authentication failed. Error: $e');
-      // Handle authentication failure
+      // Tampilkan pesan kesalahan autentikasi kepada pengguna
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Authentication failed. Please try again.'),
+          backgroundColor: Colors.red,
+        ),
+      );
     }
   }
 

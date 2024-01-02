@@ -6,6 +6,7 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _register(BuildContext context) async {
     final apiManager = Provider.of<ApiManager>(context, listen: false);
@@ -14,21 +15,48 @@ class RegisterPage extends StatelessWidget {
     final username = _usernameController.text;
     final password = _passwordController.text;
 
-    try {
-      await apiManager.register(name, username, password);
-      // Show a toast on successful registration
-
-      Navigator.pushReplacementNamed(context, '/');
-      // Handle successful registration
-    } catch (e) {
-      print('Registration failed. Error: $e');
-      // Handle registration failure
+    // Validasi input
+    if (validateInput(name, username, password)) {
+      try {
+        await apiManager.register(name, username, password);
+        // Show a toast on successful registration
+        _showSuccessSnackBar(context, 'Registration successful');
+        // Handle successful registration
+      } catch (e) {
+        print('Registration failed. Error: $e');
+        // Show error notification
+        _showErrorSnackBar(context, 'Registration failed. Please try again.');
+        // Handle registration failure
+      }
+    } else {
+      _showErrorSnackBar(context, 'Please fill all fields.');
     }
+  }
+
+  bool validateInput(String name, String username, String password) {
+    return name.isNotEmpty && username.isNotEmpty && password.isNotEmpty;
+  }
+
+  void _showSuccessSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.green,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void _showErrorSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.red,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Register Page'),
       ),

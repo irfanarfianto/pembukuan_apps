@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pembukuan_apps/screens/profile.dart';
 import 'package:pembukuan_apps/utils/design_system.dart';
 // import 'widget/custom_button.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -17,11 +18,6 @@ class _DashboardState extends State<Dashboard> {
   int _notificationCount = 3; // Jumlah notifikasi (contoh: 3 notifikasi baru)
   bool _isExpanded = false;
 
-  void _navigateToProfile() {
-    // Aksi navigasi ke halaman profile
-    // Tambahkan logika navigasi di sini
-  }
-
   void _showNotifications() {
     // Aksi untuk menampilkan daftar notifikasi atau navigasi ke halaman notifikasi
     // Tambahkan logika tampilan notifikasi di sini
@@ -35,6 +31,16 @@ class _DashboardState extends State<Dashboard> {
           !_isExpanded; // Toggles the visibility of the additional buttons
     });
   }
+
+  void _navigateToProfile() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) =>
+              ProfilePage()), // Ganti ProfilePage dengan halaman profil Anda
+    );
+  }
+
 
   String dropdownValue = 'Hari ini';
   List<String> dateOptions = [
@@ -67,11 +73,15 @@ class _DashboardState extends State<Dashboard> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: GestureDetector(
-              onTap: _navigateToProfile,
+              onTap:
+                  _navigateToProfile, // Fungsi yang akan mengarahkan ke halaman profil
               child: CircleAvatar(
-                  radius: 18, backgroundImage: AssetImage('images/pp.jpg')),
+                radius: 18,
+                backgroundImage: AssetImage('images/pp.jpg'),
+              ),
             ),
           ),
+
         ],
       ),
       body: Padding(

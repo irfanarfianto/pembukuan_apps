@@ -69,9 +69,7 @@ class _DashboardState extends State<Dashboard> {
             child: GestureDetector(
               onTap: _navigateToProfile,
               child: CircleAvatar(
-                radius: 18,
-                backgroundImage: AssetImage('assets/images/profile_image.jpg'),
-              ),
+                  radius: 18, backgroundImage: AssetImage('images/pp.jpg')),
             ),
           ),
         ],
@@ -80,21 +78,6 @@ class _DashboardState extends State<Dashboard> {
         padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Column(children: <Widget>[
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: <Widget>[
-            //     Text('Products',
-            //         style: TextStyle(
-            //             fontSize: 18,
-            //             fontWeight: FontWeight.bold,
-            //             color: DesignSystem.whiteColor)),
-            //     CustomButton(
-            //       iconData: Icons.add,
-            //       onPressed: _onButtonPressed,
-            //       text: 'Add Product',
-            //     ),
-            //   ],
-            // ),
             Container(
               margin: const EdgeInsets.only(top: 20.0),
               padding: const EdgeInsets.all(16.0),
@@ -200,7 +183,7 @@ class _DashboardState extends State<Dashboard> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    ProductList(products: products),  
+                                    ProductList(products: products),
                               ),
                             );
                           },
